@@ -44,3 +44,15 @@ sampleForm = renderBootstrap3 BootstrapBasicForm $ (,)
 
 commentIds :: (Text, Text, Text)
 commentIds = ("js-commentForm", "js-createCommentTextarea", "js-commentList")
+
+postAddTaskR :: Handler Html
+postAddTaskR = do
+  title <- runInputPost $ ireq textField "title"
+  price <- runInputPost $ ireq doubleField "price"
+  -- runDB $ insert $ Task title price
+  ((result, formWidget), formEnctype) <-runFormPost sampleForm
+  defaultLayout $ do
+      let (commentFormId, commentTextareaId, commentListId) = commentIds
+      aDomId <- newIdent
+      setTitle "Welcome To Yesod!"
+      -- $(widgetFile "homepage")
