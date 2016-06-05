@@ -1,0 +1,34 @@
+<h1.jumbotron>
+  Household Management
+
+<section.page-header>
+  <h2>Forms
+
+  <div>
+    This is an example trivial Form. Read the
+    <a href="http://www.yesodweb.com/book/forms">Forms chapter<span class="glyphicon glyphicon-bookmark"></span></a> #
+    on the yesod book to learn more about them.
+    $maybe (info,con) <- submission
+      <div .message .alert .alert-success>
+        Your file's type was <em>#{fileContentType info}</em>. You say it has: <em>#{con}</em>
+    <form method=post action=@{HomeR}#form enctype=#{formEnctype}>
+      ^{formWidget}
+      <button .btn .btn-primary type="submit">
+         Send it! <span class="glyphicon glyphicon-upload"></span>
+
+<section.page-header>
+  <h2>JSON
+
+  <p>
+    Yesod has JSON support baked-in.
+    The form below makes an AJAX request with Javascript,
+    then updates the page with your submission.
+    (see <tt>Handler/Comment.hs</tt>, <tt>templates/homepage.julius</tt>,
+    and <tt>Handler/Home.hs</tt> for the implementation).
+    <form ##{commentFormId}>
+      <.form-group>
+        <textarea ##{commentTextareaId} placeholder="Your comment here..." required></textarea>
+      <button .btn .btn-primary type="submit">
+        Create comment
+
+    <ul ##{commentListId}>
