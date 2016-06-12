@@ -2,29 +2,39 @@
   Household Management
 
 <section.page-header>
-  <h2>Forms
-
-  <div>
-    <form method=post action=@{AddTaskR}>
-      <p>
-        What?
-        <input type=text name=title>
-        How much?
-        <input type=number step=0.1 name=price>
-        <input type=submit value="Add task">
-    <form method=post action=@{HomeR}#form enctype=#{formEnctype}>
-      ^{formWidget}
-      <button .btn .btn-primary type="submit">
-         Send it! <span class="glyphicon glyphicon-upload"></span>
-
-<section.page-header>
-  <h2>JSON
-
-  <p>
-    <form ##{commentFormId}>
-      <.form-group>
-        <textarea ##{commentTextareaId} placeholder="Your comment here..." required></textarea>
-      <button .btn .btn-primary type="submit">
-        Create comment
-
-    <ul ##{commentListId}>
+    <div class="pagewrap">
+        <div class="left">
+            <h2>Orestis <i class="fa fa-male"></i> #{total t1} &euro;
+            <form method=post action=@{AddTaskR "orestis"}#form enctype=#{formEnctype1}>
+                ^{formWidget1}
+                <button .btn .btn-primary type="submit">
+                    Add! <span class="glyphicon glyphicon-upload"></span>
+            <ul>
+                $forall Entity _ task <- t1
+                    <li>
+                        <a1>#{taskName task}
+                        <a2>#{taskPrice task} &euro;
+                        <button type="button" class="del"><i class="fa fa-times"></i>
+        <div class="middle">
+            <h2>Kristina <i class="fa fa-female"></i> #{total t2} &euro;
+            <form method=post action=@{AddTaskR "kristina"}#form enctype=#{formEnctype2}>
+                ^{formWidget2}
+                <button .btn .btn-primary type="submit">
+                    Add! <span class="glyphicon glyphicon-upload"></span>
+            <ul>
+                $forall Entity _ task <- t2
+                    <li>
+                        <a1>#{taskName task}
+                        <a2>#{taskPrice task} &euro;
+                        <button type="button" class="del"><i class="fa fa-times"></i>
+        <div class="right">
+            <h2>Things to buy
+            <form method=post action=@{AddTaskR "none"}#form enctype=#{formEnctype3}>
+                ^{formWidget3}
+                <button .btn .btn-primary type="submit">
+                    Add! <span class="glyphicon glyphicon-upload"></span>
+            <ul>
+                $forall Entity _ task <- t3
+                    <li>
+                        <a1>#{taskName task}
+                        <button type="button" class="del"><i class="fa fa-times"></i>

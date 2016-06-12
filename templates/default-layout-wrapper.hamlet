@@ -16,6 +16,7 @@ $newline never
 
     ^{pageHead pc}
 
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
     \<!--[if lt IE 9]>
     \<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     \<![endif]-->
@@ -48,7 +49,6 @@ $newline never
       <div id="main" role="main">
         ^{pageBody pc}
       <footer>
-        #{appCopyright $ appSettings master}
 
     $maybe analytics <- appAnalytics $ appSettings master
       <script>

@@ -3,56 +3,81 @@ module Handler.Home where
 import Import
 import Yesod.Form.Bootstrap3 (BootstrapFormLayout (..), renderBootstrap3,
                               withSmallInput)
-import Text.Julius (RawJS (..))
 
--- This is a handler function for the GET request method on the HomeR
--- resource pattern. All of your resource patterns are defined in
--- config/routes
---
--- The majority of the code you will write in Yesod lives in these handler
--- functions. You can spread them across multiple files if you are so
--- inclined, or create a single monolithic file.
 getHomeR :: Handler Html
 getHomeR = do
-    (formWidget, formEnctype) <- generateFormPost sampleForm
-    let submission = Nothing :: Maybe (FileInfo, Text)
-        handlerName = "getHomeR" :: Text
-    defaultLayout $ do
-        let (commentFormId, commentTextareaId, commentListId) = commentIds
-        aDomId <- newIdent
-        setTitle "Welcome To Yesod!"
-        $(widgetFile "homepage")
+    (formWidget1, formEnctype1) <- generateFormPost orestisForm
+    (formWidget2, formEnctype2) <- generateFormPost kristinaForm
+    (formWidget3, formEnctype3) <- generateFormPost todoForm
 
-postHomeR :: Handler Html
-postHomeR = do
-    ((result, formWidget), formEnctype) <- runFormPost sampleForm
-    let handlerName = "postHomeR" :: Text
-        submission = case result of
-            FormSuccess res -> Just res
-            _ -> Nothing
+    t1 <- runDB $ selectList [TaskOwner ==. "orestis"] []
+    t2 <- runDB $ selectList [TaskOwner ==. "kristina"] []
+    t3 <- runDB $ selectList [TaskOwner ==. "none"] []
+
+    -- tasks <- runDB $ selectList ([] :: [Filter Task]) []
 
     defaultLayout $ do
-        let (commentFormId, commentTextareaId, commentListId) = commentIds
-        aDomId <- newIdent
-        setTitle "Welcome To Yesod!"
+        setTitle "Allee Diderot"
         $(widgetFile "homepage")
 
-sampleForm :: Form (FileInfo, Text)
-sampleForm = renderBootstrap3 BootstrapBasicForm $ (,)
-    <$> fileAFormReq "Choose a file"
-    <*> areq textField (withSmallInput "What's on the file?") Nothing
 
-commentIds :: (Text, Text, Text)
-commentIds = ("js-commentForm", "js-createCommentTextarea", "js-commentList")
 
-postAddTaskR :: Handler Html
-postAddTaskR = do
-  title <- runInputPost $ ireq textField "title"
-  price <- runInputPost $ ireq doubleField "price"
-  -- runDB $ insert $ Task title price
-  ((result, formWidget), formEnctype) <-runFormPost sampleForm
-  defaultLayout $ do
-      let (commentFormId, commentTextareaId, commentListId) = commentIds
-      aDomId <- newIdent
-      setTitle "Welcome To Yesod!"
-      -- $(widgetFile "homepage")
+postAddTaskR :: Text -> Handler ()
+postAddTaskR owner = do
+    case owner of
+        "orestis" -> do
+            ((result, _), _) <- runFormPost orestisForm
+            case result of
+                FormSuccess (name, price) -> do
+                    _ <-    runDB $ insert $ Task name price owner
+                    redirect HomeR
+                _ -> do
+                    redirect HomeR
+        "kristina" -> do
+            ((result, _), _) <- runFormPost kristinaForm
+            case result of
+                FormSuccess (name, price) -> do
+                    _ <-    runDB $ insert $ Task name price owner
+                    redirect HomeR
+                _ -> do
+                    redirect HomeR
+        _ -> do
+            ((result, _), _) <- runFormPost todoForm
+            case result of
+                FormSuccess (name, _) -> do
+                    _ <-    runDB $ insert $ Task name 0.0 owner
+                    redirect HomeR
+                _ -> do
+                    redirect HomeR
+
+
+postDeleteAllR :: Handler ()
+postDeleteAllR = do
+    _ <- runDB $ deleteWhere ([] :: [Filter Task])
+    redirect HomeR
+
+postDeleteR :: Text -> Handler ()
+postDeleteR taskId = do
+  _ <- runDB $ deleteWhere [TaskName ==. taskId]
+  redirect HomeR
+
+-- Get total price from DB result
+total :: [Entity Task] -> Double
+total list =
+    sum $ map (\(Entity _ t) -> taskPrice t) list
+
+-- FORMS
+orestisForm :: Form (Text, Double)
+orestisForm = renderBootstrap3 BootstrapBasicForm $ (,)
+    <$> areq textField (withSmallInput "What?") Nothing
+    <*> areq doubleField (withSmallInput "How much?") Nothing
+
+kristinaForm :: Form (Text, Double)
+kristinaForm = renderBootstrap3 BootstrapBasicForm $ (,)
+    <$> areq textField (withSmallInput "What?") Nothing
+    <*> areq doubleField (withSmallInput "How much?") Nothing
+
+todoForm :: Form (Text, Double)
+todoForm = renderBootstrap3 BootstrapBasicForm $ (,)
+    <$> areq textField (withSmallInput "What?") Nothing
+    <*> areq doubleField (withSmallInput "How much?") Nothing

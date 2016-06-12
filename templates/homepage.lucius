@@ -2,24 +2,36 @@ h1 {
     text-align: center;
     margin-bottom: 30px
 }
-h2##{aDomId} {
-    color: #990
-}
 li {
+    display: inline-block;
     line-height: 2em;
     font-size: 16px
+}
+.del {
+    background-color: transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
 }
 ol {
     margin-bottom: 30px
 }
-footer {
-    text-align: center
-}
 .input-sm {
-    margin-left: 20px
+    margin-right: 100px;
+    float: right;
 }
 
-##{commentTextareaId} {
-    width: 400px;
-    height: 100px;
+.left {
+    float: left;
+    width: 33%;
+}
+.middle {
+    display: inline-block;
+    width: 33% ;
+}
+.right {
+    float: right;
+    width: 33%;
 }
