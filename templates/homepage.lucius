@@ -1,11 +1,39 @@
 h1 {
     text-align: center;
-    margin-bottom: 30px
+}
+h2 {
+    text-align: center;
+}
+div {
+    text-align: center;
+}
+ul {
+    list-style: inside;
 }
 li {
+    padding-top:20px;
+    font-size: 20px;
+}
+form {
+    margin-bottom: 20px;
+}
+.input-sm {
+    margin-right: 100px;
+    float: right;
+}
+.left {
+    float: left;
+    width: 33%;
+    border-right: 1px solid black;
+}
+.middle {
     display: inline-block;
-    line-height: 2em;
-    font-size: 16px
+    width: 33% ;
+    border-right: 1px solid black;
+}
+.right {
+    float: right;
+    width: 33%;
 }
 .del {
     background-color: transparent;
@@ -15,23 +43,6 @@ li {
     overflow: hidden;
     outline:none;
 }
-ol {
-    margin-bottom: 30px
-}
-.input-sm {
-    margin-right: 100px;
-    float: right;
-}
-
-.left {
-    float: left;
-    width: 33%;
-}
-.middle {
-    display: inline-block;
-    width: 33% ;
-}
-.right {
-    float: right;
-    width: 33%;
+button {
+    margin-top: 20px;
 }

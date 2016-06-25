@@ -1,7 +1,9 @@
 $(".del").click(function(){
-      var name = $(this).parent().find("a1").text()
-      url = "@{DeleteR ""}".slice(0, -1) + name
-      console.log(url);
-      $.post(url);
-      window.location.replace("@{HomeR}");
-    });
+    var name = $(this).parent().find("a1").text()
+    url = "@{DeleteR ""}".slice(0, -1) + name
+    console.log(url);
+    $.post(url);
+    setTimeout(function(){
+        window.location.replace("@{HomeR}");
+    }, 100);
+});

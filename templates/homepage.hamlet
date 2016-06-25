@@ -8,7 +8,7 @@
             <form method=post action=@{AddTaskR "orestis"}#form enctype=#{formEnctype1}>
                 ^{formWidget1}
                 <button .btn .btn-primary type="submit">
-                    Add! <span class="glyphicon glyphicon-upload"></span>
+                    Add! <span class="glyphicon glyphicon-plus"></span>
             <ul>
                 $forall Entity _ task <- t1
                     <li>
@@ -20,7 +20,7 @@
             <form method=post action=@{AddTaskR "kristina"}#form enctype=#{formEnctype2}>
                 ^{formWidget2}
                 <button .btn .btn-primary type="submit">
-                    Add! <span class="glyphicon glyphicon-upload"></span>
+                    Add! <span class="glyphicon glyphicon-plus"></span>
             <ul>
                 $forall Entity _ task <- t2
                     <li>
@@ -32,7 +32,7 @@
             <form method=post action=@{AddTaskR "none"}#form enctype=#{formEnctype3}>
                 ^{formWidget3}
                 <button .btn .btn-primary type="submit">
-                    Add! <span class="glyphicon glyphicon-upload"></span>
+                    Add! <span class="glyphicon glyphicon-plus"></span>
             <ul>
                 $forall Entity _ task <- t3
                     <li>

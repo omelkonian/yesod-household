@@ -1,8 +1,7 @@
 module Handler.Home where
 
 import Import
-import Yesod.Form.Bootstrap3 (BootstrapFormLayout (..), renderBootstrap3,
-                              withSmallInput)
+import Yesod.Form.Bootstrap3 (BootstrapFormLayout (..), renderBootstrap3,withSmallInput)
 
 getHomeR :: Handler Html
 getHomeR = do
@@ -14,12 +13,9 @@ getHomeR = do
     t2 <- runDB $ selectList [TaskOwner ==. "kristina"] []
     t3 <- runDB $ selectList [TaskOwner ==. "none"] []
 
-    -- tasks <- runDB $ selectList ([] :: [Filter Task]) []
-
     defaultLayout $ do
         setTitle "Allee Diderot"
         $(widgetFile "homepage")
-
 
 
 postAddTaskR :: Text -> Handler ()
@@ -44,8 +40,8 @@ postAddTaskR owner = do
         _ -> do
             ((result, _), _) <- runFormPost todoForm
             case result of
-                FormSuccess (name, _) -> do
-                    _ <-    runDB $ insert $ Task name 0.0 owner
+                FormSuccess name -> do
+                    _ <-    runDB $ insert $ Task name 0.0 "none"
                     redirect HomeR
                 _ -> do
                     redirect HomeR
@@ -77,7 +73,6 @@ kristinaForm = renderBootstrap3 BootstrapBasicForm $ (,)
     <$> areq textField (withSmallInput "What?") Nothing
     <*> areq doubleField (withSmallInput "How much?") Nothing
 
-todoForm :: Form (Text, Double)
-todoForm = renderBootstrap3 BootstrapBasicForm $ (,)
-    <$> areq textField (withSmallInput "What?") Nothing
-    <*> areq doubleField (withSmallInput "How much?") Nothing
+todoForm :: Form Text
+todoForm = renderBootstrap3 BootstrapBasicForm $
+    areq textField (withSmallInput "What?") Nothing
