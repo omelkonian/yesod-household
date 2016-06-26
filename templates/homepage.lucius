@@ -11,8 +11,8 @@ ul {
     list-style: inside;
 }
 li {
-    padding-top:20px;
-    font-size: 20px;
+    padding-top:3px;
+    font-size:18px;
 }
 form {
     margin-bottom: 20px;
